@@ -6,7 +6,7 @@ Port of [Matt Kula's][matt] [AnimatedPathView][anim] to Xarain.Android with some
 What does it do?
 ================
 
-It animates a path! Take a look at [this blog post][guyb] [Romain Guy][guy] posted, which idea this sprung from. There is a nice video in that post.
+It animates a path! Take a look at [this blog post][guyb], [Romain Guy][guy] posted, which idea this sprung from. There is a nice video in that post.
 
 Basically it takes a path, and over time it fills that path out on the screen.
 
