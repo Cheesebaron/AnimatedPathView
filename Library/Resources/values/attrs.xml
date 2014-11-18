@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="AnimatedPathView">
+    <attr name="apvStrokeColor" format="color"/>
+    <attr name="apvStrokeWidth" format="float"/>
+  </declare-styleable>
+</resources>
