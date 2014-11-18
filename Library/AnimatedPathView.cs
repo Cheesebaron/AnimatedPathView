@@ -13,30 +13,31 @@ namespace DK.Ostebaronen.Droid.Views
 {
     public class AnimatedPathView : View
     {
+        private Paint _paint;
+
+        private float _pathLength;
+        private float _progress;
         private Color _strokeColor;
         private float _strokeWidth;
 
-        private Paint _paint;
-
-        private float _progress;
-        private float _pathLength;
-
-        protected AnimatedPathView(IntPtr javaReference, JniHandleOwnership transfer) 
+        protected AnimatedPathView(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer)
-        { }
+        {
+        }
 
-        public AnimatedPathView(Context context) 
+        public AnimatedPathView(Context context)
             : this(context, null)
-        { }
+        {
+        }
 
-        public AnimatedPathView(Context context, IAttributeSet attrs) 
+        public AnimatedPathView(Context context, IAttributeSet attrs)
             : this(context, attrs, 0)
-        { }
+        {
+        }
 
-        public AnimatedPathView(Context context, IAttributeSet attrs, int defStyleAttr) 
+        public AnimatedPathView(Context context, IAttributeSet attrs, int defStyleAttr)
             : base(context, attrs, defStyleAttr)
         {
-            
             var a = context.ObtainStyledAttributes(attrs, Resource.Styleable.AnimatedPathView);
             _strokeColor = a.GetColor(Resource.Styleable.AnimatedPathView_apvStrokeColor,
                 Color.Argb(0xff, 0x00, 0xff, 0x00));
@@ -45,16 +46,8 @@ namespace DK.Ostebaronen.Droid.Views
             Init();
         }
 
-        private void Init()
-        {
-            _paint = new Paint(PaintFlags.AntiAlias) {Color = _strokeColor, StrokeWidth = _strokeWidth};
-            _paint.SetStyle(Paint.Style.Stroke);
-
-            SetPath(new Path());
-        }
-
         /// <summary>
-        /// Sets or gets the stroke width of the Path drawn.
+        ///     Sets or gets the stroke width of the Path drawn.
         /// </summary>
         public float StrokeWidth
         {
@@ -67,7 +60,7 @@ namespace DK.Ostebaronen.Droid.Views
         }
 
         /// <summary>
-        /// Sets or gets the stroke color of the Path drawn.
+        ///     Sets or gets the stroke color of the Path drawn.
         /// </summary>
         public Color StrokeColor
         {
@@ -81,6 +74,30 @@ namespace DK.Ostebaronen.Droid.Views
 
         public Path Path { get; private set; }
 
+        /// <summary>
+        ///     Set the percentage of the Path animated.
+        /// </summary>
+        public float Percentage
+        {
+            get { return _progress; }
+            set
+            {
+                if (value < 0.0f || value > 1.0f)
+                    throw new ArgumentOutOfRangeException("value");
+
+                _progress = value;
+                Invalidate();
+            }
+        }
+
+        private void Init()
+        {
+            _paint = new Paint(PaintFlags.AntiAlias) {Color = _strokeColor, StrokeWidth = _strokeWidth};
+            _paint.SetStyle(Paint.Style.Stroke);
+
+            SetPath(new Path());
+        }
+
         public void SetPath(Path p)
         {
             Path = p;
@@ -89,10 +106,10 @@ namespace DK.Ostebaronen.Droid.Views
         }
 
         /// <summary>
-        /// Creates a path, by starting with moving to first point then calling
-        /// LineTo for the rest of the elements. This means that it will become
-        /// a path with no breaks. Use the other override to create a more
-        /// sophisticated path
+        ///     Creates a path, by starting with moving to first point then calling
+        ///     LineTo for the rest of the elements. This means that it will become
+        ///     a path with no breaks. Use the other override to create a more
+        ///     sophisticated path
         /// </summary>
         /// <param name="path"></param>
         public void SetPath(IList<Tuple<float, float>> path)
@@ -112,22 +129,6 @@ namespace DK.Ostebaronen.Droid.Views
             SetPath(p);
         }
 
-        /// <summary>
-        /// Set the percentage of the Path animated.
-        /// </summary>
-        public float Percentage
-        {
-            get { return _progress; }
-            set
-            {
-                if (value < 0.0f || value > 1.0f)
-                    throw new ArgumentOutOfRangeException("value");
-
-                _progress = value;
-                Invalidate();
-            }
-        }
-
         [Export("setPercentage")] // for animation
         [Obsolete("Use property instead. This is only for Object Animators")]
         public void SetPercentage(float percentage)
@@ -136,8 +137,8 @@ namespace DK.Ostebaronen.Droid.Views
         }
 
         /// <summary>
-        /// Scale the Path by factor N, where N is the number of times each coordinate is
-        /// multiplied.
+        ///     Scale the Path by factor N, where N is the number of times each coordinate is
+        ///     multiplied.
         /// </summary>
         /// <param name="x">Multiplicity of X coordinates</param>
         /// <param name="y">Multiplicity of Y coordinates</param>
@@ -155,7 +156,7 @@ namespace DK.Ostebaronen.Droid.Views
         {
             base.OnDraw(canvas);
 
-            var effect = new DashPathEffect(new[] { _pathLength, _pathLength }, (_pathLength - _pathLength * _progress));
+            var effect = new DashPathEffect(new[] {_pathLength, _pathLength}, (_pathLength - _pathLength * _progress));
             _paint.SetPathEffect(effect);
 
             canvas.Save();
@@ -183,7 +184,7 @@ namespace DK.Ostebaronen.Droid.Views
         }
 
         /// <summary>
-        /// Create Path from very simple SVG Paths, supports M, L, C and z
+        ///     Create Path from very simple SVG Paths, supports M, L, C and z
         /// </summary>
         /// <param name="data">SVG Path string</param>
         /// <returns>Path</returns>
