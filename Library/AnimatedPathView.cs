@@ -11,6 +11,7 @@ using Java.Interop;
 
 namespace DK.Ostebaronen.Droid.Views
 {
+    [Register("dk.ostebaronen.droid.views.AnimatedPathView")]
     public class AnimatedPathView : View
     {
         private Paint _paint;
