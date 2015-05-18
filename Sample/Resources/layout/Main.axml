@@ -10,7 +10,10 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         app:apvStrokeColor="@android:color/holo_red_light"
-        app:apvStrokeWidth="10" />
+        app:apvStrokeWidth="10"
+        app:apvSvgPath="M 300,110 C 300,200 200,250 150,300 C 110,240 10,190 10,110 C 10,30 130,10 150,100 C 150,10 300,30 300,110 z"
+        app:apvPathScaleFactorX="2"
+        app:apvPathScaleFactorY="2" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -44,7 +44,11 @@ namespace DK.Ostebaronen.Droid.Views
                 Color.Argb(0xff, 0x00, 0xff, 0x00));
             _strokeWidth = a.GetFloat(Resource.Styleable.AnimatedPathView_apvStrokeWidth, 8.0f);
 
-            Init();
+            var svgPath = a.GetString(Resource.Styleable.AnimatedPathView_apvSvgPath);
+            var scaleFactorX = a.GetFloat(Resource.Styleable.AnimatedPathView_apvPathScaleFactorX, 1.0f);
+            var scaleFactorY = a.GetFloat(Resource.Styleable.AnimatedPathView_apvPathScaleFactorY, 1.0f);
+
+            Init(svgPath, scaleFactorX, scaleFactorY);
         }
 
         /// <summary>
@@ -91,12 +95,15 @@ namespace DK.Ostebaronen.Droid.Views
             }
         }
 
-        private void Init()
+        private void Init(string svgPath, float scaleFactorX, float scaleFactorY)
         {
             _paint = new Paint(PaintFlags.AntiAlias) {Color = _strokeColor, StrokeWidth = _strokeWidth};
             _paint.SetStyle(Paint.Style.Stroke);
 
-            SetPath(new Path());
+            var path = !string.IsNullOrEmpty(svgPath) ? CreatePathFromSvgString(svgPath) : new Path();
+
+            SetPath(path);
+            ScalePathBy(scaleFactorX, scaleFactorY);
         }
 
         public void SetPath(Path p)

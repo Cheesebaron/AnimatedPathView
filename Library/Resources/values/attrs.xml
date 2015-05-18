@@ -3,5 +3,8 @@
   <declare-styleable name="AnimatedPathView">
     <attr name="apvStrokeColor" format="color"/>
     <attr name="apvStrokeWidth" format="float"/>
+    <attr name="apvSvgPath" format="string"/>
+    <attr name="apvPathScaleFactorX" format="float"/>
+    <attr name="apvPathScaleFactorY" format="float"/>
   </declare-styleable>
 </resources>
